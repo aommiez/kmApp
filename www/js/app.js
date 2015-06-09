@@ -67,6 +67,26 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                     }
                 }
             })
+            .state('app.expertsSub', {
+                url: "/expertsSub/:faqId",
+                views: {
+                    'menuContent': {
+                        templateUrl: "templates/expertsSub.html",
+                        controller: 'expertsSubCtrl'
+                    }
+                }
+
+            })
+            .state('app.expertsDetail', {
+                url: "/expertsDetail/:faqId",
+                views: {
+                    'menuContent': {
+                        templateUrl: "templates/expertsDetail.html",
+                        controller: 'expertsDetailCtrl'
+                    }
+                }
+
+            })
             .state('app.ebook', {
                 url: "/ebook",
                 views: {

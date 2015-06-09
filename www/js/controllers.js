@@ -171,3 +171,54 @@ angular.module('starter.controllers', [])
                 alert(data);
             });
     })
+    .controller('expertsSubCtrl', function ($scope, $http, $stateParams) {
+        $scope.faqId = $stateParams.faqId;
+        var API_URL;
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.open("GET", "api.xml", false);
+        xmlhttp.send();
+        xmlDoc = xmlhttp.responseXML;
+        var x = xmlDoc;
+        API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
+        $http.get(API_URL + '/guru?guru_cat_id='+$scope.faqId).
+            success(function (res, status, headers, config) {
+                for (var i = 0; i < res.length; i++) {
+                    $("#expertsSubList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/expertsDetail/" + res.data[i].guru_id + "\">"
+                        + "<img src=\"img/e-book.jpg\">"
+                        + "<h2>" + res.data[i].firstname + " " + res.data[i].lastname +"</h2>"
+                        + "<p>" + res.data[i].guru_telephone + "</p>"
+                        + "</a>");
+                }
+                $scope.data = res;
+            }).
+            error(function (data, status, headers, config) {
+                alert(data);
+            });
+    })
+    .controller('expertsDetailCtrl', function ($scope, $http, $stateParams) {
+        $scope.faqId = $stateParams.faqId;
+        var API_URL;
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.open("GET", "api.xml", false);
+        xmlhttp.send();
+        xmlDoc = xmlhttp.responseXML;
+        var x = xmlDoc;
+        API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
+        $http.get(API_URL + '/guru/'+$scope.faqId).
+            success(function (res, status, headers, config) {
+                $scope.data = res;
+            }).
+            error(function (data, status, headers, config) {
+                alert(data);
+            });
+    })
