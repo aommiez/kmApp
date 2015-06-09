@@ -47,7 +47,7 @@ angular.module('starter.controllers', [])
                 success(function (res, status, headers, config) {
                     for (var i = 0; i < res.length; i++) {
                         $("#newsList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/newsDetail/" + res.data[i].news_id + "\">"
-                        + "<img src=\"" + res.data[i].news_image_url + " \">"
+                        + "<img src=\"" + res.data[i].news_cover_url + " \">"
                         + "<h2>" + res.data[i].news_name + "</h2>"
                         + "<p>" + res.data[i].news_description + "</p>"
                         + "</a>");
@@ -109,6 +109,61 @@ angular.module('starter.controllers', [])
         var x = xmlDoc;
         API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
         $http.get(API_URL + '/faq/'+$scope.faqId).
+            success(function (res, status, headers, config) {
+                $scope.data = res;
+            }).
+            error(function (data, status, headers, config) {
+                alert(data);
+            });
+    })
+
+    .controller('kmCtrl', function ($scope, $http, $stateParams) {
+        var API_URL;
+        document.addEventListener("deviceready", alertReady, false);
+
+        function alertReady() {
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            }
+            else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.open("GET", "api.xml", false);
+            xmlhttp.send();
+            xmlDoc = xmlhttp.responseXML;
+            var x = xmlDoc;
+            API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
+            $("#statusShow").text("Load Content");
+            $http.get(API_URL + '/kmcenter').
+                success(function (res, status, headers, config) {
+                    for (var i = 0; i < res.length; i++) {
+                        $("#kmList").append("<a class=\"item \" href=\"#/app/kmDetail/" + res.data[i].kmcenter_id + "\">"
+                            + "<h2>" + res.data[i].kmcenter_name + "</h2>"
+                            + "<p>" + res.data[i].kmcenter_description + "</p>"
+                            + "</a>");
+                    }
+                    $("#statusShow").text("");
+                }).
+                error(function (data, status, headers, config) {
+                    alert(data);
+                });
+        }
+    })
+    .controller('kmDetailCtrl', function ($scope, $http, $stateParams) {
+        $scope.faqId = $stateParams.faqId;
+        var API_URL;
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.open("GET", "api.xml", false);
+        xmlhttp.send();
+        xmlDoc = xmlhttp.responseXML;
+        var x = xmlDoc;
+        API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
+        $http.get(API_URL + '/kmcenter/'+$scope.faqId).
             success(function (res, status, headers, config) {
                 $scope.data = res;
             }).

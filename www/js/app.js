@@ -79,9 +79,20 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 url: "/km",
                 views: {
                     'menuContent': {
-                        templateUrl: "templates/km.html"
+                        templateUrl: "templates/km.html",
+                        controller: 'kmCtrl'
                     }
                 }
+            })
+            .state('app.kmDetail', {
+                url: "/kmDetail/:faqId",
+                views: {
+                    'menuContent': {
+                        templateUrl: "templates/kmDetail.html",
+                        controller: 'kmDetailCtrl'
+                    }
+                }
+
             })
             .state('app.faq', {
                 url: "/faq",
