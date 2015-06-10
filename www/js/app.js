@@ -59,6 +59,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 },
                 controller: 'categoryCtrl'
             })
+            .state('app.categorySub', {
+                url: "/categorySub/:faqId",
+                views: {
+                    'menuContent': {
+                        templateUrl: "templates/categorySub.html",
+                        controller: 'categorySubCtrl'
+                    }
+                }
+
+            })
             .state('app.experts', {
                 url: "/experts",
                 views: {
@@ -112,6 +122,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                     'menuContent': {
                         templateUrl: "templates/ebookDetail.html",
                         controller: 'ebookDetailCtrl'
+                    }
+                }
+
+            })
+            .state('app.videoDetail', {
+                url: "/videoDetail/:faqId",
+                views: {
+                    'menuContent': {
+                        templateUrl: "templates/videoDetail.html",
+                        controller: 'videoDetailCtrl'
                     }
                 }
 

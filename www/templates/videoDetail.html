@@ -1,0 +1,20 @@
+<ion-view view-title="{{data.content_name}}" >
+    <ion-content ng-controller="videoDetailCtrl">
+        <div>
+            <div>
+                <img src="{{data.book_cover_url}}" style="width: 100%"/>
+            </div>
+            <div style="padding: 10px;">
+                ชื่อ : {{data.content_name}}
+            </div>
+            <div style="padding: 10px;">
+                {{data.content_description}}
+            </div>
+            <div style="padding: 10px;">
+                <button class="button button-positive" ng-click="openVideo()">
+                    Play Video {{data.videos[0].video_url}}
+                </button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

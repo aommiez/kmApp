@@ -333,30 +333,69 @@ angular.module('starter.controllers', []).config(['$sceDelegateProvider', functi
                     window.open('http://docs.google.com/viewer?url='+$scope.data.book_url, "_blank");
                 }
             }
-
-
-/*
- var url = $scope.data.book_url; // image url
- window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
- var pdfPath = fs.root.fullPath + $scope.data.book_path; // full file path
- var fileTransfer = new FileTransfer();
- fileTransfer.download(url, pdfPath, function (entry) {
- window.plugins.fileOpener.open(entry.fullPath);
- console.log(entry.fullPath); // entry is fileEntry object
- }, function (error) {
- console.log("Some error");
- });
- })
-
- console.log(url);
- */
-
-            /*
-            var ref = window.open('http://docs.google.com/viewer?url='+$scope.data.book_url, '_system', 'location=yes');
-            ref.addEventListener('loadstart', function(event) { alert('start: ' + event.url); });
-            ref.addEventListener('loadstop', function(event) { alert('stop: ' + event.url); });
-            ref.addEventListener('loaderror', function(event) { alert('error: ' + event.message); });
-            ref.addEventListener('exit', function(event) { alert(event.type); });
-            */
         }
+    })
+    .controller('categorySubCtrl', function ($scope, $http, $stateParams) {
+        $scope.faqId = $stateParams.faqId;
+        var API_URL;
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.open("GET", "api.xml", false);
+        xmlhttp.send();
+        xmlDoc = xmlhttp.responseXML;
+        var x = xmlDoc;
+        API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
+        $http.get(API_URL + '/content/by_category?category_id='+$scope.faqId).
+            success(function (res, status, headers, config) {
+                for (var i = 0; i < res.length; i++) {
+                    if (res.data[i].content_type == "book") {
+                        $("#categorySubList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/ebookDetail/" + res.data[i].content_id + "\">"
+                            + "<img src=\"img/e-book.jpg\">"
+                            + "<h2>" + res.data[i].content_name + "</h2>"
+                            + "<p>" + res.data[i].content_description + "</p>"
+                            + "</a>");
+                    } else if (res.data[i].content_type == "video") {
+                        $("#categorySubList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/videoDetail/" + res.data[i].content_id + "\">"
+                            + "<img src=\"img/e-book.jpg\">"
+                            + "<h2>" + res.data[i].content_name + "</h2>"
+                            + "<p>" + res.data[i].content_description + "</p>"
+                            + "</a>");
+                    }
+
+                }
+                $scope.data = res;
+            }).
+            error(function (data, status, headers, config) {
+                alert(data);
+            });
+    })
+    .controller('videoDetailCtrl', function ($scope, $http, $stateParams) {
+        $scope.faqId = $stateParams.faqId;
+        var API_URL;
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.open("GET", "api.xml", false);
+        xmlhttp.send();
+        xmlDoc = xmlhttp.responseXML;
+        var x = xmlDoc;
+        API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
+        $http.get(API_URL + '/content/'+$scope.faqId).
+            success(function (res, status, headers, config) {
+                $scope.data = res;
+            }).
+            error(function (data, status, headers, config) {
+                alert(data);
+            });
+        $scope.openVideo = function (url) {
+            window.plugins.videoPlayer.play($scope.data.videos[0].video_url);
+        }
+
     })
