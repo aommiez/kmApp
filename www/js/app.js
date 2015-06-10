@@ -91,9 +91,30 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 url: "/ebook",
                 views: {
                     'menuContent': {
-                        templateUrl: "templates/ebook.html"
+                        templateUrl: "templates/ebook.html",
+                        controller: 'ebookCtrl'
                     }
                 }
+            })
+            .state('app.ebookSub', {
+                url: "/ebookSub/:faqId",
+                views: {
+                    'menuContent': {
+                        templateUrl: "templates/ebookSub.html",
+                        controller: 'ebookSubCtrl'
+                    }
+                }
+
+            })
+            .state('app.ebookDetail', {
+                url: "/ebookDetail/:faqId",
+                views: {
+                    'menuContent': {
+                        templateUrl: "templates/ebookDetail.html",
+                        controller: 'ebookDetailCtrl'
+                    }
+                }
+
             })
             .state('app.km', {
                 url: "/km",

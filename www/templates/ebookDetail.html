@@ -1,0 +1,26 @@
+<ion-view view-title="{{data.content_name}}" >
+    <ion-content ng-controller="ebookDetailCtrl">
+        <div>
+            <div>
+                <img src="{{data.book_cover_url}}" style="width: 100%"/>
+            </div>
+            <div style="padding: 10px;">
+                ชื่อ : {{data.content_name}}
+            </div>
+            <div style="padding: 10px;">
+                ผู้แต่ง : {{data.book_author}}
+            </div>
+            <div style="padding: 10px;">
+                สำนัก : {{data.book_publishing_house}}
+            </div>
+            <div style="padding: 10px;">
+                {{data.content_description}}
+            </div>
+            <div style="padding: 10px;">
+
+                <!--<a href="#"  onclick='window.plugins.childBrowser.showWebPage(encodeURI("http://docs.google.com/viewer?url=' + {{data.book_url}} + '));'>Read</a>-->
+                <a href="#"  ng-click="openPDF()">Read</a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
