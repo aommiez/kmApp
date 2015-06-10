@@ -354,13 +354,13 @@ angular.module('starter.controllers', []).config(['$sceDelegateProvider', functi
                 for (var i = 0; i < res.length; i++) {
                     if (res.data[i].content_type == "book") {
                         $("#categorySubList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/ebookDetail/" + res.data[i].content_id + "\">"
-                            + "<img src=\"img/e-book.jpg\">"
+                            + "<img src=\"img/cat/book.jpg\">"
                             + "<h2>" + res.data[i].content_name + "</h2>"
                             + "<p>" + res.data[i].content_description + "</p>"
                             + "</a>");
                     } else if (res.data[i].content_type == "video") {
                         $("#categorySubList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/videoDetail/" + res.data[i].content_id + "\">"
-                            + "<img src=\"img/e-book.jpg\">"
+                            + "<img src=\"img/cat/playlist.jpg\">"
                             + "<h2>" + res.data[i].content_name + "</h2>"
                             + "<p>" + res.data[i].content_description + "</p>"
                             + "</a>");
