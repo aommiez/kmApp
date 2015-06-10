@@ -1,9 +1,4 @@
-angular.module('starter.controllers', []).config(['$sceDelegateProvider', function ($sceDelegateProvider) {
-    $sceDelegateProvider.resourceUrlWhitelist([
-        'self',
-        'http://58.137.91.19/**'
-    ]);
-}])
+angular.module('starter.controllers', [])
     .controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
 
     })
