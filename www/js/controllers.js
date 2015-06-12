@@ -385,12 +385,12 @@ angular.module('starter.controllers', [])
         $http.get(API_URL + '/content/'+$scope.faqId).
             success(function (res, status, headers, config) {
                 $scope.data = res;
+                console.log(res);
             }).
             error(function (data, status, headers, config) {
                 alert(data);
             });
         $scope.openVideo = function (url) {
-            window.plugins.videoPlayer.play($scope.data.videos[0].video_url);
-        }
-
-    })
+            window.plugins.videoPlayer.play(url);
+        };
+    });

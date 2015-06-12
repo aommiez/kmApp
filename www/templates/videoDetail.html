@@ -10,10 +10,14 @@
             <div style="padding: 10px;">
                 {{data.content_description}}
             </div>
-            <div style="padding: 10px;">
-                <button class="button button-positive" ng-click="openVideo()">
-                    Play Video {{data.videos[0].video_url}}
-                </button>
+            <div style="padding: 10px;" ng-repeat="v in data.videos" ng-click="openVideo(v.video_url)">
+                <div>
+                    <img width="100%" src="{{v.video_thumb_url}}" />
+                    {{v.video_name}}
+                </div>
+                <!--<button class="button button-positive" ng-click="openVideo()">-->
+                    <!--Play Video {{v.video_url}}-->
+                <!--</button>-->
             </div>
         </div>
     </ion-content>
