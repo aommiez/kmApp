@@ -397,10 +397,6 @@ angular.module('starter.controllers', [])
                 alert(data);
             });
         $scope.openVideo = function (url) {
-            var devicePlatform = device.platform;
-            if ( devicePlatform == "iOS") {
-                return;
-            }
             window.plugins.videoPlayer.play(url);
         };
     });
