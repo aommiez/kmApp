@@ -19,6 +19,7 @@ angular.module('starter.controllers', [])
         API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
         $http.get(API_URL + '/news/'+$scope.newsId).
             success(function (res, status, headers, config) {
+                console.log(res);
                 $scope.data = res;
             }).
             error(function (data, status, headers, config) {
@@ -31,12 +32,14 @@ angular.module('starter.controllers', [])
         document.addEventListener("deviceready", alertReady, false);
 
         function alertReady() {
+
             if (window.XMLHttpRequest) {
                 xmlhttp = new XMLHttpRequest();
             }
             else {
                 xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
             }
+
             xmlhttp.open("GET", "api.xml", false);
             xmlhttp.send();
             xmlDoc = xmlhttp.responseXML;
@@ -45,6 +48,7 @@ angular.module('starter.controllers', [])
             $("#statusShow").text("Load Content");
             $http.get(API_URL + '/news').
                 success(function (res, status, headers, config) {
+                    console.log(res);
                     for (var i = 0; i < res.length; i++) {
                         $("#newsList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/newsDetail/" + res.data[i].news_id + "\">"
                         + "<img src=\"" + res.data[i].news_cover_url + " \">"
@@ -397,10 +401,10 @@ angular.module('starter.controllers', [])
                 alert(data);
             });
         $scope.openVideo = function (url) {
-            var devicePlatform = device.platform;
-            if ( devicePlatform == "iOS") {
-                return;
-            }
+            //var devicePlatform = device.platform;
+            //if ( devicePlatform == "iOS") {
+            //    return;
+            //}
             window.plugins.videoPlayer.play(url);
         };
     });
