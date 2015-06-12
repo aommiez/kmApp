@@ -29,7 +29,7 @@ angular.module('starter.controllers', [])
 
     .controller('newsCtrl', function ($scope, $http, $stateParams) {
         var API_URL;
-        document.addEventListener("deviceready", alertReady, false);
+        //document.addEventListener("deviceready", alertReady, false);
 
         function alertReady() {
 
@@ -62,6 +62,7 @@ angular.module('starter.controllers', [])
                     alert(data);
                 });
         }
+        alertReady();
     })
 
 
@@ -310,7 +311,7 @@ angular.module('starter.controllers', [])
             });
 
         $scope.openPDF = function () {
-            var devicePlatform = device.platform;
+            var devicePlatform = "Android";//device.platform;
             if ( devicePlatform == "iOS") {
                 /*
                 PDFViewer.open($scope.data.book_url,$scope.data.book_path, function (msg) {
