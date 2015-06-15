@@ -399,7 +399,7 @@ angular.module('starter.controllers', [])
         $scope.openVideo = function (url) {
             var devicePlatform = device.platform;
             if ( devicePlatform == "iOS") {
-                alert(devicePlatform);
+                window.plugins.videoPlayer.play(url);
             } else {
                 window.plugins.videoPlayer.play(url);
             }
