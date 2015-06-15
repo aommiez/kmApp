@@ -307,19 +307,18 @@ angular.module('starter.controllers', [])
             });
 
         $scope.openPDF = function () {
-            var devicePlatform = "Android";//device.platform;
+            var devicePlatform = device.platform;
             if ( devicePlatform == "iOS") {
+                cordova.exec(null, null, "InAppBrowser", "open", ['http://docs.google.com/viewer?url='+$scope.data.book_url, "_system"]);
+
                 /*
-                PDFViewer.open($scope.data.book_url,$scope.data.book_path, function (msg) {
-                    console.log(msg);
-                });*/
                 if (typeof navigator !== "undefined" && navigator.app) {
                     // Mobile device.
                     navigator.app.loadUrl('http://docs.google.com/viewer?url='+$scope.data.book_url, {openExternal: true});
                 } else {
                     // Possible web browser
                     window.open('http://docs.google.com/viewer?url='+$scope.data.book_url, "_blank");
-                }
+                }*/
             } else {
                 /*
                 var ref = window.open('http://docs.google.com/viewer?url='+$scope.data.book_url, '_system', 'location=yes');
@@ -398,10 +397,11 @@ angular.module('starter.controllers', [])
                 alert(data);
             });
         $scope.openVideo = function (url) {
-            //var devicePlatform = device.platform;
-            //if ( devicePlatform == "iOS") {
-            //    return;
-            //}
-            window.plugins.videoPlayer.play(url);
+            var devicePlatform = device.platform;
+            if ( devicePlatform == "iOS") {
+                alert(devicePlatform);
+            } else {
+                window.plugins.videoPlayer.play(url);
+            }
         };
     });
