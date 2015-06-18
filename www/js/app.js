@@ -21,12 +21,11 @@ angular.module('starter', ['ionic', 'starter.controllers'])
             }
 
         });
-    })
-    .config(['$sceDelegateProvider', function ($sceDelegateProvider) {
-        $sceDelegateProvider.resourceUrlWhitelist([
-            'self',
-            'http://58.137.91.19/**'
-        ]);
+    }).config(['$sceDelegateProvider', function ($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+        'self',
+        'http://58.137.91.19/tobacco/**'
+    ]);
     }])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider

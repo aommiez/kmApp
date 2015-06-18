@@ -4,20 +4,48 @@
             <div>
                 <img src="{{data.book_cover_url}}" style="width: 100%"/>
             </div>
-            <div style="padding: 10px;">
-                ชื่อ : {{data.content_name}}
-            </div>
-            <div style="padding: 10px;">
-                ผู้แต่ง : {{data.book_author}}
-            </div>
-            <div style="padding: 10px;">
-                สำนัก : {{data.book_publishing_house}}
-            </div>
-            <div style="padding: 10px;">
-                {{data.content_description}}
-            </div>
-            <div style="padding: 10px;">
 
+            <div class="panel panel-default" style="margin-top: 16px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">ชื่อ</h3>
+                </div>
+                <div class="panel-body">
+                    {{data.content_name}}
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">ผู้แต่ง</h3>
+                </div>
+                <div class="panel-body">
+                    {{data.book_author}}
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">สำนักพิม</h3>
+                </div>
+                <div class="panel-body">
+                    {{data.book_publishing_house}}
+                </div>
+            </div>
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">คำอธิบาย</h3>
+                </div>
+                <div class="panel-body">
+                    {{data.content_description}}
+                </div>
+            </div>
+
+
+            <div style="padding: 10px;">
                 <!--<a href="#"  onclick='window.plugins.childBrowser.showWebPage(encodeURI("http://docs.google.com/viewer?url=' + {{data.book_url}} + '));'>Read</a>-->
 
                 <button class="button button-positive" ng-click="openPDF()">

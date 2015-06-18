@@ -4,15 +4,32 @@
             <div>
                 <img src="img/e-book.jpg" style="width: 100%"/>
             </div>
-            <div style="padding: 10px;">
-                ชื่อ : {{data.firstname}} {{data.lastname}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">ชื่อ</h3>
+                </div>
+                <div class="panel-body">
+                    {{data.firstname}} {{data.lastname}}
+                </div>
             </div>
-            <div style="padding: 10px;">
-                เบอร์ : {{data.guru_telephone}}
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">เบอร์</h3>
+                </div>
+                <div class="panel-body">
+                    {{data.guru_telephone}}
+                </div>
             </div>
-            <div style="padding: 10px;">
-                {{data.guru_history}}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">ประวัติ</h3>
+                </div>
+                <div class="panel-body">
+                    {{data.guru_history}}
+                </div>
             </div>
+
         </div>
     </ion-content>
 </ion-view>

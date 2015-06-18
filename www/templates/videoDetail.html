@@ -1,16 +1,25 @@
 <ion-view view-title="{{data.content_name}}" >
     <ion-content ng-controller="videoDetailCtrl" style="background-color: rgb(184, 128, 77);">
         <div>
-            <div>
-                <img src="{{data.book_cover_url}}" style="width: 100%"/>
-            </div>
-            <div style="padding: 10px;">
-                ชื่อ : {{data.content_name}}
-            </div>
-            <div style="padding: 10px;">
-                {{data.content_description}}
+
+            <div class="panel panel-default" style="margin-top: 16px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">ชื่อ</h3>
+                </div>
+                <div class="panel-body">
+                    {{data.content_name}}
+                </div>
             </div>
 
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">คำอธิบาย</h3>
+                </div>
+                <div class="panel-body">
+                    {{data.content_description}}
+                </div>
+            </div>
 
 
             <div style="padding: 10px;" ng-repeat="v in data.videos" >
@@ -18,7 +27,6 @@
                     <video id="video" controls poster="{{v.video_thumb_url}}" style="width:100%;">
                         <source src="{{v.video_url}}" type="video/mp4"></source>
                     </video>
-                    {{v.video_name}}
                 </div>
             </div>
         </div>
