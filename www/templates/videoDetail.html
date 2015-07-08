@@ -24,11 +24,20 @@
 
             <div style="padding: 10px;" ng-repeat="v in data.videos" >
                 <div>
-                    <video id="video" controls poster="{{v.video_thumb_url}}" style="width:100%;">
-                        <source src="{{v.video_url}}" type="video/mp4"></source>
+                    <video id="example_video_1" class="video-js vjs-default-skin"
+                           controls preload="auto" width="100%"
+                           poster="{{v.video_thumb_url}}"
+                           data-setup='{}'>
+                        <source src="{{v.video_url}}" type='video/mp4' />
+                        <p class="vjs-no-js">
+                            To view this video please enable JavaScript, and consider upgrading to a web browser
+                            that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                        </p>
                     </video>
                 </div>
             </div>
+
+
         </div>
     </ion-content>
 </ion-view>
