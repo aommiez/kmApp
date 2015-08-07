@@ -29,6 +29,11 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
+            .state('login', {
+                url: '/login',
+                templateUrl: 'templates/login.html',
+                controller: 'LoginCtrl'
+            })
             .state('app', {
                 url: "/app",
                 abstract: true,
@@ -159,6 +164,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 }
 
             })
+            .state('app.blog', {
+                url: "/blog",
+                views: {
+                    'menuContent': {
+                        templateUrl: "templates/blog.html",
+                        controller: 'blogCtrl'
+                    }
+                }
+            })
             .state('app.faq', {
                 url: "/faq",
                 views: {
@@ -176,9 +190,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                         controller: 'faqDetailCtrl'
                     }
                 }
-
             })
 
         // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/app/news');
+        $urlRouterProvider.otherwise('/login');
     });

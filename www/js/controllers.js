@@ -308,7 +308,7 @@ angular.module('starter.controllers', [])
 
         $scope.openPDF = function () {
             var devicePlatform = device.platform;
-            if ( devicePlatform == "iOS") {
+            if ( devicePlatform == "iOS" ) {
                 cordova.exec(null, null, "InAppBrowser", "open", ['http://docs.google.com/viewer?url='+$scope.data.book_url, "_system"]);
 
                 /*
@@ -374,6 +374,50 @@ angular.module('starter.controllers', [])
                 alert(data);
             });
     })
+    .controller('blogCtrl',['$location','$http','$scope', function($location,$http,$scope) {
+        $scope.firstname = localStorage.getItem("firstname");
+        $scope.lastname = localStorage.getItem("lastname");
+        $scope.picture = localStorage.getItem("picture");
+        $scope.username = localStorage.getItem("username");
+    }])
+    .controller('LoginCtrl',['$location','$http','$scope', function($location,$http,$scope) {
+        var API_URL;
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.open("GET", "api.xml", false);
+        xmlhttp.send();
+        xmlDoc = xmlhttp.responseXML;
+        var x = xmlDoc;
+        API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
+
+        $scope.data = {};
+
+        $scope.login = function() {
+            console.log("LOGIN user: " + $scope.data.username + " - PW: " + $scope.data.password);
+            $http.get("http://58.137.91.19/tobacco/client/addview?client_id=101");
+            $http.post(API_URL + '/login', {username:$scope.data.username,password:$scope.data.password}).
+                success(function (res, status, headers, config) {
+                    if (typeof res.error != 'undefined') {
+                        alert(res.error.message);
+                    } else {
+                        localStorage.setItem("firstname", res.firstname);
+                        localStorage.setItem("lastname", res.lastname);
+                        localStorage.setItem("picture", res.picture);
+                        localStorage.setItem("username", res.username);
+                        $location.path('/app/news');
+                    }
+                    $scope.data = res;
+                    console.log(res);
+                }).
+                error(function (data, status, headers, config) {
+                    alert(data);
+                });
+        }
+    }])
     .controller('videoDetailCtrl', function ($scope, $http, $stateParams) {
         $scope.faqId = $stateParams.faqId;
         var API_URL;
