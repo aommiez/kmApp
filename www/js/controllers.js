@@ -1,9 +1,14 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['angular-carousel'])
     .controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
 
     })
 
-    .controller('newsDetailCtrl', function ($scope, $http, $stateParams) {
+    .controller('newsDetailCtrl', function ($scope, $http,$stateParams, $ionicPlatform,$ionicPopup,$ionicHistory) {
+
+        $ionicPlatform.onHardwareBackButton(function () {
+            $ionicHistory.backView();
+        });
+
         $scope.newsId = $stateParams.newsId;
         var API_URL;
         if (window.XMLHttpRequest) {
@@ -26,11 +31,24 @@ angular.module('starter.controllers', [])
             });
     })
 
-    .controller('newsCtrl', function ($scope, $http, $stateParams) {
+    .controller('newsCtrl', function ($scope, $http, $state,$stateParams, $ionicPlatform,$ionicPopup) {
         var API_URL;
         //document.addEventListener("deviceready", alertReady, false);
 
         function alertReady() {
+
+
+            $ionicPlatform.registerBackButtonAction(function (event) {
+                console.log($state.current.name);
+                if ($state.current.name == "app.news") {
+                    event.preventDefault();
+                    // do something for this state
+                } else {
+                    navigator.app.backHistory();
+                }
+            }, 100);
+
+
             if (window.XMLHttpRequest) {
                 xmlhttp = new XMLHttpRequest();
             }
@@ -57,8 +75,15 @@ angular.module('starter.controllers', [])
                 error(function (data, status, headers, config) {
                     alert(data);
                 });
+
+
         }
         alertReady();
+
+        function backKeyDown() {
+            console.log('backkkk');
+            //navigator.app.exitApp(); // To exit the app!
+        }
     })
 
 
@@ -190,7 +215,7 @@ angular.module('starter.controllers', [])
             success(function (res, status, headers, config) {
                 for (var i = 0; i < res.length; i++) {
                     $("#expertsSubList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/expertsDetail/" + res.data[i].guru_id + "\">"
-                        + "<img src=\"img/e-book.jpg\">"
+                        + "<img src=\""+res.data[i].picture+"\">"
                         + "<h2>" + res.data[i].firstname + " " + res.data[i].lastname +"</h2>"
                         + "<p>" + res.data[i].guru_telephone + "</p>"
                         + "</a>");
@@ -222,6 +247,38 @@ angular.module('starter.controllers', [])
             error(function (data, status, headers, config) {
                 alert(data);
             });
+    })
+    .controller('expertsCtrl', function ($scope, $http, $stateParams) {
+        var API_URL;
+        document.addEventListener("deviceready", alertReady, false);
+
+        function alertReady() {
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            }
+            else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.open("GET", "api.xml", false);
+            xmlhttp.send();
+            xmlDoc = xmlhttp.responseXML;
+            var x = xmlDoc;
+            API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
+
+            $http.get(API_URL + '/guru/category').
+                success(function (res, status, headers, config) {
+                    for (var i = 0; i < res.length; i++) {
+                        $("#expertsList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/expertsSub/" + res.data[i].guru_cat_id + "\">"
+                            + "<img src=\""+res.data[i].guru_cat_icon_url+"\">"
+                            + "<h2>" + res.data[i].guru_cat_name + "</h2>"
+                            + "</a>");
+                    }
+                    $("#statusShow").text("");
+                }).
+                error(function (data, status, headers, config) {
+                    alert(data);
+                });
+        }
     })
     .controller('ebookCtrl', function ($scope, $http, $stateParams) {
         var API_URL;
@@ -381,6 +438,9 @@ angular.module('starter.controllers', [])
         $scope.username = localStorage.getItem("username");
     }])
     .controller('LoginCtrl',['$location','$http','$scope', function($location,$http,$scope) {
+        if (localStorage.getItem('login')) {
+            $location.path('/app/news');
+        }
         var API_URL;
         if (window.XMLHttpRequest) {
             xmlhttp = new XMLHttpRequest();
@@ -408,6 +468,7 @@ angular.module('starter.controllers', [])
                         localStorage.setItem("lastname", res.lastname);
                         localStorage.setItem("picture", res.picture);
                         localStorage.setItem("username", res.username);
+                        localStorage.setItem("login",1);
                         $location.path('/app/news');
                     }
                     $scope.data = res;

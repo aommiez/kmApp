@@ -1,8 +1,17 @@
+
 <ion-view view-title="{{data.news_name}}" >
     <ion-content ng-controller="newsDetailCtrl" style="background-color: rgb(184, 128, 77);">
+        <style>
+            .layer { width: 100% }
+        </style>
         <div>
-            <div>
-                <img src="{{data.news_cover_url}}" style="width: 100%"/>
+            <div style="height: 210px;">
+                <ul rn-carousel class="image">
+                    <li ng-repeat="image in data.news_images" style="background-image:url({{ image.image_url }});">
+                        <img ng-src="{{ image.image_url }}" class="layer">
+                    </li>
+                </ul>
+
             </div>
 
             <div class="panel panel-default">
@@ -13,7 +22,7 @@
                     {{data.news_description}}
                 </div>
             </div>
-
         </div>
+
     </ion-content>
 </ion-view>

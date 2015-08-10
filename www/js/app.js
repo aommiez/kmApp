@@ -82,7 +82,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 url: "/experts",
                 views: {
                     'menuContent': {
-                        templateUrl: "templates/experts.html"
+                        templateUrl: "templates/experts.html",
+                        controller: 'expertsCtrl'
                     }
                 }
             })
