@@ -61,7 +61,7 @@ angular.module('starter.controllers', ['angular-carousel'])
             var x = xmlDoc;
             API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
             $("#statusShow").text("Load Content");
-            $http.get(API_URL + '/news').
+            $http.get(API_URL + '/news?limit=10').
                 success(function (res, status, headers, config) {
                     for (var i = 0; i < res.length; i++) {
                         $("#newsList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/newsDetail/" + res.data[i].news_id + "\">"
@@ -365,9 +365,10 @@ angular.module('starter.controllers', ['angular-carousel'])
 
         $scope.openPDF = function () {
             var devicePlatform = device.platform;
+
+            console.log(devicePlatform);
             if ( devicePlatform == "iOS" ) {
                 cordova.exec(null, null, "InAppBrowser", "open", ['http://docs.google.com/viewer?url='+$scope.data.book_url, "_system"]);
-
                 /*
                 if (typeof navigator !== "undefined" && navigator.app) {
                     // Mobile device.
@@ -376,21 +377,22 @@ angular.module('starter.controllers', ['angular-carousel'])
                     // Possible web browser
                     window.open('http://docs.google.com/viewer?url='+$scope.data.book_url, "_blank");
                 }*/
-            } else {
-                /*
+            } else if (devicePlatform == 'Android') {
                 var ref = window.open('http://docs.google.com/viewer?url='+$scope.data.book_url, '_system', 'location=yes');
                 ref.addEventListener('loadstart', function(event) { alert('start: ' + event.url); });
                 ref.addEventListener('loadstop', function(event) { alert('stop: ' + event.url); });
                 ref.addEventListener('loaderror', function(event) { alert('error: ' + event.message); });
-                ref.addEventListener('exit', function(event) { alert(event.type); });*/
+                ref.addEventListener('exit', function(event) { alert(event.type); });
+                /*
                 if (typeof navigator !== "undefined" && navigator.app) {
                     // Mobile device.
                     navigator.app.loadUrl('http://docs.google.com/viewer?url='+$scope.data.book_url, {openExternal: true});
                 } else {
                     // Possible web browser
                     window.open('http://docs.google.com/viewer?url='+$scope.data.book_url, "_blank");
-                }
+                }*/
             }
+
         }
     })
     .controller('categorySubCtrl', function ($scope, $http, $stateParams) {
@@ -478,6 +480,12 @@ angular.module('starter.controllers', ['angular-carousel'])
                     alert(data);
                 });
         }
+    }])
+    .controller('logoutCtrl',['$location','$http','$scope', function($location,$http,$scope) {
+        localStorage.clear();
+        console.log('logout');
+        $location.path('/login');
+
     }])
     .controller('videoDetailCtrl', function ($scope, $http, $stateParams) {
         $scope.faqId = $stateParams.faqId;
