@@ -34,6 +34,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 templateUrl: 'templates/login.html',
                 controller: 'LoginCtrl'
             })
+            .state('logout', {
+                url: '/logout',
+                controller: 'logoutCtrl'
+            })
             .state('app', {
                 url: "/app",
                 abstract: true,
