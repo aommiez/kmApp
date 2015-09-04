@@ -2,16 +2,20 @@
 <ion-view view-title="{{data.news_name}}" >
     <ion-content ng-controller="newsDetailCtrl" style="background-color: rgb(184, 128, 77);">
         <style>
-            .layer { width: 100% }
+            .slider {
+                visibility: visible;
+            }
         </style>
         <div>
-            <div style="height: 210px;">
-                <ul rn-carousel class="image">
-                    <li ng-repeat="image in data.news_images" style="background-image:url({{ image.image_url }});">
-                        <img ng-src="{{ image.image_url }}" class="layer">
-                    </li>
-                </ul>
 
+            <!--
+            <div id="container2"></div>
+            <div ng-repeat="image in data.news_images" title="" data-bgimage="{{image.image_url}}"></div>
+-->
+
+            <div id="slider" class="slider">
+                <!--
+                <img ng-repeat="image in data.news_images" src="{{image.image_url}}" class="slide_item">-->
             </div>
 
             <div class="panel panel-default">
@@ -23,6 +27,10 @@
                 </div>
             </div>
         </div>
-
     </ion-content>
 </ion-view>
+<script>
+    $(document).ready(function() {
+       //$("#slider").excoloSlider();
+    });
+</script>

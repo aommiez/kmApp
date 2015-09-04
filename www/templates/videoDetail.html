@@ -24,6 +24,8 @@
 
             <div style="padding: 10px;" ng-repeat="v in data.videos" >
                 <div>
+                    <img src="{{v.video_thumb_url}}" style="width: 100%" ng-click="openVideo(v.video_url)">
+                    <!--
                     <video id="example_video_1" class="video-js vjs-default-skin"
                            controls preload="auto" width="100%"
                            poster="{{v.video_thumb_url}}"
@@ -33,7 +35,7 @@
                             To view this video please enable JavaScript, and consider upgrading to a web browser
                             that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
                         </p>
-                    </video>
+                    </video>-->
                 </div>
             </div>
 

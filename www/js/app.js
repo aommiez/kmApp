@@ -67,7 +67,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 url: "/category",
                 views: {
                     'menuContent': {
-                        templateUrl: "templates/category.html"
+                        templateUrl: "templates/category.html",
+                        controller: 'categoryCtrl'
                     }
                 },
                 controller: 'categoryCtrl'
@@ -80,7 +81,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                         controller: 'categorySubCtrl'
                     }
                 }
-
+            })
+            .state('app.categorySubTwo', {
+                url: "/categorySubTwo/:faqId",
+                views: {
+                    'menuContent': {
+                        templateUrl: "templates/categorySubTwo.html",
+                        controller: 'categorySubTwoCtrl'
+                    }
+                }
             })
             .state('app.experts', {
                 url: "/experts",

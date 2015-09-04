@@ -22,13 +22,41 @@ angular.module('starter.controllers', ['angular-carousel'])
         xmlDoc = xmlhttp.responseXML;
         var x = xmlDoc;
         API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
+
         $http.get(API_URL + '/news/'+$scope.newsId).
             success(function (res, status, headers, config) {
                 $scope.data = res;
+                if ($(".slide_item").size() == 0) {
+                    for (var i in res.news_images) {
+                        $("#slider").append('<img src="'+res.news_images[i].image_url+'" class="slide_item">');
+                    }
+                    if ($(".slide-dragcontainer").size() == 0) {
+                        console.log('create slider');
+                        $("#slider").excoloSlider();
+                        //s = true;
+                    }
+                }
+
             }).
             error(function (data, status, headers, config) {
                 alert(data);
             });
+        var s = false;
+        $scope.$watch('data',function(value){
+/*
+            if (typeof value != 'undefined') {
+                if ($(".slide_item").size()== value.news_images.length) {
+                    if ($(".slide-dragcontainer").size() == 0) {
+                        console.log('create slider');
+                        $("#slider").excoloSlider();
+                        //s = true;
+                    }
+                }
+                console.log(value);
+            }*/
+            //console.log(value);
+            //console.log('silde'+ $(".slide-dragcontainer").size());
+        });
     })
 
     .controller('newsCtrl', function ($scope, $http, $state,$stateParams, $ionicPlatform,$ionicPopup) {
@@ -330,7 +358,7 @@ angular.module('starter.controllers', ['angular-carousel'])
             success(function (res, status, headers, config) {
                 for (var i = 0; i < res.length; i++) {
                     $("#ebookSubList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/ebookDetail/" + res.data[i].content_id + "\">"
-                        + "<img src=\"img/e-book.jpg\">"
+                        + "<img src=\"" + res.data[i].book_cover_url + "\">"
                         + "<h2>" + res.data[i].content_name + "</h2>"
                         + "<p>" + res.data[i].content_description + "</p>"
                         + "</a>");
@@ -395,7 +423,39 @@ angular.module('starter.controllers', ['angular-carousel'])
 
         }
     })
-    .controller('categorySubCtrl', function ($scope, $http, $stateParams) {
+    .controller('categoryCtrl', function ($scope, $http, $stateParams) {
+        var API_URL;
+        document.addEventListener("deviceready", alertReady, false);
+
+        function alertReady() {
+            if (window.XMLHttpRequest) {
+                xmlhttp = new XMLHttpRequest();
+            }
+            else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.open("GET", "api.xml", false);
+            xmlhttp.send();
+            xmlDoc = xmlhttp.responseXML;
+            var x = xmlDoc;
+            API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
+
+            $http.get(API_URL + '/category').
+                success(function (res, status, headers, config) {
+                    for (var i = 0; i < res.length; i++) {
+                        $("#categoryList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/categorySub/" + res.data[i].category_id + "\">"
+                            + "<img src=\""+res.data[i].mobile_icon_url+"\">"
+                            + "<h2>" + res.data[i].category_name + "</h2>"
+                            + "</a>");
+                    }
+                    $("#statusShow").text("");
+                }).
+                error(function (data, status, headers, config) {
+                    alert(data);
+                });
+        }
+    })
+    .controller('categorySubTwoCtrl', function ($scope, $http, $stateParams) {
         $scope.faqId = $stateParams.faqId;
         var API_URL;
         if (window.XMLHttpRequest) {
@@ -411,6 +471,51 @@ angular.module('starter.controllers', ['angular-carousel'])
         API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
         $http.get(API_URL + '/content/by_category?category_id='+$scope.faqId).
             success(function (res, status, headers, config) {
+                 for (var i = 0; i < res.length; i++) {
+                 if (res.data[i].content_type == "book") {
+                 $("#categorySubTwoList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/ebookDetail/" + res.data[i].content_id + "\">"
+                 + "<img src=\"img/cat/book.jpg\">"
+                 + "<h2>" + res.data[i].content_name + "</h2>"
+                 + "<p>" + res.data[i].content_description + "</p>"
+                 + "</a>");
+                 } else if (res.data[i].content_type == "video") {
+                 $("#categorySubTwoList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/videoDetail/" + res.data[i].content_id + "\">"
+                 + "<img src=\"img/cat/playlist.jpg\">"
+                 + "<h2>" + res.data[i].content_name + "</h2>"
+                 + "<p>" + res.data[i].content_description + "</p>"
+                 + "</a>");
+                 }
+                 }
+                $scope.data = res;
+            }).
+            error(function (data, status, headers, config) {
+                alert(data);
+            });
+    })
+    .controller('categorySubCtrl', function ($scope, $http, $stateParams) {
+        $scope.faqId = $stateParams.faqId;
+        var API_URL;
+        if (window.XMLHttpRequest) {
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.open("GET", "api.xml", false);
+        xmlhttp.send();
+        xmlDoc = xmlhttp.responseXML;
+        var x = xmlDoc;
+        API_URL = x.getElementsByTagName("API")[0].getAttribute("URL");
+        //$http.get(API_URL + '/content/by_category?category_id='+$scope.faqId).
+        $http.get(API_URL + '/category?parent_id='+$scope.faqId).
+            success(function (res, status, headers, config) {
+                for (var i = 0; i < res.length; i++) {
+                    $("#categorySubList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/categorySubTwo/" + res.data[i].category_id + "\">"
+                        + "<img src=\""+res.data[i].mobile_icon_url+"\">"
+                        + "<h2>" + res.data[i].category_name + "</h2>"
+                        + "</a>");
+                }
+                /*
                 for (var i = 0; i < res.length; i++) {
                     if (res.data[i].content_type == "book") {
                         $("#categorySubList").append("<a class=\"item item-thumbnail-left\" href=\"#/app/ebookDetail/" + res.data[i].content_id + "\">"
@@ -426,7 +531,7 @@ angular.module('starter.controllers', ['angular-carousel'])
                             + "</a>");
                     }
 
-                }
+                }*/
                 $scope.data = res;
             }).
             error(function (data, status, headers, config) {
@@ -514,7 +619,9 @@ angular.module('starter.controllers', ['angular-carousel'])
             if ( devicePlatform == "iOS") {
                 window.plugins.videoPlayer.play(url);
             } else {
-                window.plugins.videoPlayer.play(url);
+                //alert('android video play')
+                VideoPlayer.play(url);
+                //window.plugins.videoPlayer.play(url);
             }
         };
     });
